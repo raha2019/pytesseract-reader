@@ -1,19 +1,16 @@
-from pdf2image import convert_from_path, convert_from bytes
-from pdf2image.exceptions import (
-    PDFInforNotInstalledError,
-    PDFPageCountError,
-    PDFSyntaxError
-)
-
 import pytesseract
 import PIL
+from PIL import Image
+from pdf2image import convert_from_path
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-image = convert_from_path()
 
-input = ""
+pages = convert_from_path('ReadME-Pytesseract-reader.pdf', 500)
+for page in pages:
+    page.save('out.jpg', 'JPEG')
 
+input = "out.jpg"
 output = pytesseract.image_to_string(Image.open(input))
 print(output)
